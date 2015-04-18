@@ -3,9 +3,9 @@
 self.addEventListener('push', function(event) {
   console.log('Received a push message', event);
 
-  var title = 'Yay a message.';
-  var body = 'We have received a push message.';
-  var icon = '/images/icon-192x192.png';
+  var title = 'Hackson in Kamiyama.';
+  var body = 'それさぁ、早く言ってよぉ～(ﾟДﾟ)ｺﾞﾙｧ！';
+  var icon = 'icon-236x236.png';
   var tag = 'simple-push-demo-notification-tag';
 
   event.waitUntil(
@@ -35,7 +35,7 @@ self.addEventListener('notificationclick', function(event) {
         return client.focus();
     }
     if (clients.openWindow)
-      return clients.openWindow('/');
+      return clients.openWindow('/hackson/push-messaging-and-notifications/redirect.html');
   }));
 
 });

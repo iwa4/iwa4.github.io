@@ -1,11 +1,11 @@
 {
-  "name": "Push Demo",
-  "short_name": "Push Demo",
+  "name": "Hackson Push Demo",
+  "short_name": "Hackson Push Demo",
   "icons": [{
-        "src": "images/icon-192x192.png",
-        "sizes": "192x192"
+        "src": "icon-236x236.png",
+        "sizes": "48x48"
       }],
-  "start_url": "./index.html?homescreen=1",
+  "start_url": "/index.html?homescreen=1",
   "display": "standalone",
   "gcm_sender_id": "2239299966",
   "gcm_user_visible_only": true

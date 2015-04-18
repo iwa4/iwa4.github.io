@@ -6,10 +6,29 @@ var curlCommandDiv = document.querySelector('.js-curl-command');
 var isPushEnabled = false;
 
 function sendSubscriptionToServer(subscription) {
-  // TODO: Send the subscription.subscriptionId and 
-  // subscription.endpoint to your server and save 
+  // TODO: Send the subscription.subscriptionId and
+  // subscription.endpoint to your server and save
   // it to send a push message at a later date
   console.log('TODO: Implement sendSubscriptionToServer()');
+  var subscriptionId = subscription.subscriptionId;
+  var endpoint = subscription.endpoint;
+
+  // No 'Access-Control-Allow-Origin' header is present on the requested resource.
+  $.ajax({
+    url: endpoint,
+    type: 'POST',
+    headers: {
+      'X-HTTP-Method-Override': 'POST',
+      'Content-Type': 'application/json',
+      'Authorization': 'key=' + API_KEY
+    },
+    dataType: 'json',
+    data: '{"registration_ids": ["' + subscriptionId + '"]}',
+  }).done(function() {
+    console.log('success');
+  }).fail(function () {
+    console.log('failed');
+  });
 }
 
 function showCurlCommand(subscription) {
@@ -17,7 +36,7 @@ function showCurlCommand(subscription) {
   var subscriptionId = subscription.subscriptionId;
   var endpoint = subscription.endpoint;
   var curlCommand = 'curl --header "Authorization: key=' + API_KEY +
-    '" --header Content-Type:"application/json" ' + endpoint + 
+    '" --header Content-Type:"application/json" ' + endpoint +
     ' -d "{\\"registration_ids\\":[\\"' + subscriptionId + '\\"]}"';
 
   curlCommandDiv.textContent = curlCommand;
@@ -42,10 +61,10 @@ function unsubscribe() {
           pushButton.textContent = 'Enable Push Messages';
           return;
         }
-        
+
         var subscriptionId = pushSubscription.subscriptionId;
         // TODO: Make a request to your server to remove
-        // the subscriptionId from your data store so you 
+        // the subscriptionId from your data store so you
         // don't attempt to send them push messages anymore
 
         // We have a subcription, so call unsubscribe on it
@@ -55,8 +74,8 @@ function unsubscribe() {
           isPushEnabled = false;
         }).catch(function(e) {
           // We failed to unsubscribe, this can lead to
-          // an unusual state, so may be best to remove 
-          // the subscription id from your data store and 
+          // an unusual state, so may be best to remove
+          // the subscription id from your data store and
           // inform the user that you disabled push
 
           window.Demo.debug.log('Unsubscription error: ', e);
@@ -85,7 +104,7 @@ function subscribe() {
 
         showCurlCommand(subscription);
 
-        // TODO: Send the subscription.subscriptionId and 
+        // TODO: Send the subscription.subscriptionId and
         // subscription.endpoint to your server
         // and save it to send a push message at a later date
         return sendSubscriptionToServer(subscription);
@@ -150,7 +169,7 @@ function initialiseState() {
 
         // Keep your server in sync with the latest subscriptionId
         sendSubscriptionToServer(subscription);
-        
+
         showCurlCommand(subscription);
 
         // Set your UI to show they have subscribed for
